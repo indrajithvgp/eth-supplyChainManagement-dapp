@@ -3,9 +3,9 @@ pragma solidity >=0.4.21 <0.9.0;
 import "./erc20Interface.sol";
 
 contract ERC20Token is ERC20Interface {
-    // uint256 constant private MAX_UINT256 = 2**256 ‐ 1;
+    uint256 constant private MAX_UINT256 = 2**256 ‐ 1;
 
-    uint256 constant private MAX_UINT256 = 1.157920892373162e+77 - 1;
+    // uint256 constant private MAX_UINT256 = 1.157920892373162e+77 - 1;
     
     mapping (address => uint256) public balances;
     mapping (address => mapping (address => uint256)) public allowed;
@@ -30,7 +30,7 @@ contract ERC20Token is ERC20Interface {
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require(balances[msg.sender] >= _value,"Insufficient funds for transfer source.");
-        balances[msg.sender] ‐= _value;
+        balances[msg.sender] = balances[msg.sender] - _value;
         balances[_to] += _value;
         emit Transfer(msg.sender, _to, _value); //solhint‐disable‐line indent, no‐unused‐vars
         return true;
@@ -40,9 +40,9 @@ contract ERC20Token is ERC20Interface {
         uint256 allowance = allowed[_from][msg.sender];
         require(balances[_from] >= _value && allowance >= _value,"Insufficient allowed funds for transfer source.");
         balances[_to] += _value;
-        balances[_from] ‐= _value;
+        balances[_from] = balances[_from]- _value;
         if (allowance < MAX_UINT256) {
-            allowed[_from][msg.sender] ‐= _value;
+            allowed[_from][msg.sender] = allowed[_from][msg.sender] - _value;
         }
         emit Transfer(_from, _to, _value); //solhint‐disable‐line indent, no‐unused‐vars
         return true;
