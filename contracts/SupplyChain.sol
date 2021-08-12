@@ -134,7 +134,7 @@ function authenticateParticipant(uint32 _uid,
         if(keccak256(abi.encodePacked(participants[_uid].userName)) == keccak256(abi.encodePacked(_uname))) {
             if(keccak256(abi.encodePacked(participants[_uid].password)) == keccak256(abi.encodePacked(_pass))) {
                 return (true);
-                }
+            }
             }
         }
     return (false);
